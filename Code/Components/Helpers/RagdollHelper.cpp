@@ -136,8 +136,6 @@ bool CRagdollHelperComponent::IsRagdoll()
 {
 	if (IPhysicalEntity* pPhys = m_pEntity->GetPhysicalEntity())
 	{
-		CryLogAlways("%i", pPhys->GetType() == PE_ARTICULATED);
-
 		return pPhys->GetType() == PE_ARTICULATED;
 	}
 
