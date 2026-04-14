@@ -118,7 +118,9 @@ protected:
 	// IEntityComponent
 	virtual EntityEventMask GetEventMask() const override final;
 	virtual ComponentEventPriority GetEventPriority() const override final;
+public:
 	virtual void Initialize() override final;
+protected:
 	virtual void ProcessEvent(const SEntityEvent& event) override final;
 	// ~IEntityComponent
 
