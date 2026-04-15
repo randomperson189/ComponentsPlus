@@ -2,9 +2,7 @@
 #pragma once
 
 #include <CrySystem/ICryPlugin.h>
-
 #include <CryGame/IGameFramework.h>
-
 #include <CryEntitySystem/IEntityClass.h>
 
 class CPlugin 
@@ -13,7 +11,7 @@ class CPlugin
 {
 public:
 	CRYINTERFACE_SIMPLE(Cry::IEnginePlugin)
-	CRYGENERATE_SINGLETONCLASS_GUID(CPlugin, "Components+", "2711a23d-3848-4cdd-a95b-e9d88ffa23b0"_cry_guid)
+	CRYGENERATE_SINGLETONCLASS_GUID(CPlugin, "Components+", "{A6F9F73D-F613-4008-BDD0-7D2F2180E624}"_cry_guid)
 
 	virtual ~CPlugin();
 	
