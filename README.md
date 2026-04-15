@@ -1,7 +1,7 @@
 # ComponentsPlus
 Components+ is a plugin for CryEngine 5.7 that exposes more functions to it's ECS &amp; Schematyc system
 
-## How to get it working:
+## How to install the plugin to your project:
 
 1. Download the files in this repository (either by cloing or via zip download)
 2. Open the **bin** folder and then inside that, move the two folders called **win_x64** and **win_x64_release** into your CryEngine 5 project's **bin** folder (don't replace if prompted)
@@ -23,6 +23,6 @@ Components+ is a plugin for CryEngine 5.7 that exposes more functions to it's EC
 {
   "guid": "",
   "type": "EType::Native",
-  "path": "bin/win_x64/ECSAreaTrigger.dll"
+  "path": "bin/win_x64/ComponentsPlus.dll"
 },
 ```
