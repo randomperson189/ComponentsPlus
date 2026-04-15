@@ -79,6 +79,9 @@ void CRagdollHelperComponent::ProcessEvent(const SEntityEvent& event)
 
 void CRagdollHelperComponent::Ragdollize()
 {
+	if (IsRagdoll())
+		return;
+
 	Vec3 linearVelocity;
 	Vec3 angularVelocity;
 
@@ -126,16 +129,19 @@ void CRagdollHelperComponent::Ragdollize()
 
 void CRagdollHelperComponent::UnRagdollize()
 {
+	if (!IsRagdoll())
+		return;
+
 	if (Cry::DefaultComponents::CCharacterControllerComponent* pCharacterController = m_pEntity->GetComponent<Cry::DefaultComponents::CCharacterControllerComponent>())
-	{
 		pCharacterController->Physicalize();
-	}
 }
 
 bool CRagdollHelperComponent::IsRagdoll()
 {
 	if (IPhysicalEntity* pPhys = m_pEntity->GetPhysicalEntity())
 	{
+		//CryLogAlways("%i", pPhys->GetType() == PE_ARTICULATED);
+
 		return pPhys->GetType() == PE_ARTICULATED;
 	}
 
