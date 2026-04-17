@@ -24,5 +24,5 @@ Components+ is a plugin for CryEngine 5.7 that exposes more functions to it's EC
   "guid": "",
   "type": "EType::Native",
   "path": "bin/win_x64/ComponentsPlus.dll"
-},
+}
 ```
