@@ -21,4 +21,6 @@ public:
 
 	void CreateAttachment(Schematyc::ExplicitEntityId id, int animComponentIndex, Schematyc::CSharedString attachmentName, Vec3 scale = Vec3(1.f, 1.f, 1.f));
 	void RemoveAttachment(int animComponentIndex, Schematyc::CSharedString attachmentName);
+
+	CryTransform::CTransform GetAttachmentTransform(int animComponentIndex, Schematyc::CSharedString attachmentName);
 };

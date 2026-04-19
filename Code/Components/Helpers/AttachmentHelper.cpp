@@ -29,6 +29,13 @@ namespace
 				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
 				componentScope.Register(pFunction);
 			}
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::GetAttachmentTransform, "{9894E80A-39EF-4BF3-9843-D99FA7AD2E3E}"_cry_guid, "Get Attachment Transform");
+				pFunction->BindOutput(0, 'tr', "Transform", "Attachment Transform");
+				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
+				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
+				componentScope.Register(pFunction);
+			}
 		}
 	}
 
@@ -106,4 +113,33 @@ void CAttachmentHelperComponent::RemoveAttachment(int animComponentIndex, Schema
 			}
 		}
 	}
+}
+
+CryTransform::CTransform CAttachmentHelperComponent::GetAttachmentTransform(int animComponentIndex, Schematyc::CSharedString attachmentName)
+{
+	// Define the animation component's interface ID (from ReflectType)
+	// TODO: Find a better way to get the GUID directly, just in case it changes
+	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
+
+	// Array to store all components of this type
+	DynArray<IEntityComponent*> components;
+	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+
+	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
+	{
+		if (ICharacterInstance* pCharInstance = animationComponent->GetCharacter())
+		{
+			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
+			{
+				if (pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					QuatTS worldQuatTS = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str())->GetAttWorldAbsolute();
+
+					return CryTransform::CTransform(worldQuatTS.t, CryTransform::CRotation(worldQuatTS.q), Vec3(worldQuatTS.s));
+				}
+			}
+		}
+	}
+
+	return CryTransform::CTransform();
 }
