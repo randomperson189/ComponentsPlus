@@ -18,6 +18,9 @@ public:
 	static void ReflectType(Schematyc::CTypeDesc<CCharacterControllerHelperComponent>& desc);
 	// ~IEntityComponent
 
-	float GetDimensions(/*float& radius, */float& height, bool& bCapsule, float& groundContactEps);
-	void SetDimensions(/*float mass, */float radius, float height, bool bCapsule, float groundContactEps);
+	float GetDimensions(/*float& radius, */float& height, float& zOffset, bool& bCapsule, float& groundContactEps);
+	void SetDimensions(/*float mass, */float radius, float height, float zOffset, bool bCapsule, float groundContactEps);
+
+	/*CryTransform::CTransform GetTransform();
+	void SetTransform(CryTransform::CTransform transform);*/
 };
