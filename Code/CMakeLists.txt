@@ -30,12 +30,14 @@ add_sources("Helpers_uber.cpp"
     PROJECTS ComponentsPlus
     SOURCE_GROUP "Components\\\\Helpers"
 		"Components/Helpers/AttachmentHelper.cpp"
+		"Components/Helpers/CameraHelper.cpp"
 		"Components/Helpers/CharacterControllerHelper.cpp"
 		"Components/Helpers/CVarHelper.cpp"
 		"Components/Helpers/MaterialHelper.cpp"
 		"Components/Helpers/NetworkHelper.cpp"
 		"Components/Helpers/RagdollHelper.cpp"
 		"Components/Helpers/AttachmentHelper.h"
+		"Components/Helpers/CameraHelper.h"
 		"Components/Helpers/CharacterControllerHelper.h"
 		"Components/Helpers/CVarHelper.h"
 		"Components/Helpers/MaterialHelper.h"
@@ -47,6 +49,11 @@ add_sources("Physics_uber.cpp"
     SOURCE_GROUP "Components\\\\Physics"
 		"Components/Physics/CollisionMask.cpp"
 		"Components/Physics/CollisionMask.h"
+)
+add_sources("Schematyc_uber.cpp"
+    PROJECTS ComponentsPlus
+    SOURCE_GROUP "Schematyc"
+		"Schematyc/CustomSchematycFunctions.cpp"
 )
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/CVarOverrides.h")
