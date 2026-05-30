@@ -98,12 +98,12 @@ void CRagdollHelperComponent::Ragdollize()
 
 	SEntityPhysicalizeParams physParams;
 	physParams.type = PE_ARTICULATED;
-	physParams.nSlot = GetOrMakeEntitySlotId();
+	physParams.nSlot = m_pEntity->GetComponent<Cry::DefaultComponents::CAdvancedAnimationComponent>()->GetEntitySlotId();
 	physParams.mass = 80.0f;
 	physParams.bCopyJointVelocities = true;
 	physParams.fStiffnessScale = 0.5f;
 
-	// Have to run this twice for some reason or else it won't work
+	// Run this twice just in case it doesn't sometimes work the first time
 	m_pEntity->Physicalize(physParams);
 	m_pEntity->Physicalize(physParams);
 
