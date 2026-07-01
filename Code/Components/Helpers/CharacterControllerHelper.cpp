@@ -4,6 +4,7 @@
 #include <CrySchematyc/Env/Elements/EnvComponent.h>
 #include <CrySchematyc/Env/Elements/EnvFunction.h>
 #include <CrySchematyc/Env/Elements/EnvSignal.h>
+#include <CrySchematyc/Env/IEnvRegistrar.h>
 
 #include <DefaultComponents/Physics/CharacterControllerComponent.h>
 
@@ -50,16 +51,6 @@ namespace
 	}
 
 	CRY_STATIC_AUTO_REGISTER_FUNCTION(&RegisterCharacterControllerHelperComponent);
-}
-
-// Reflect type to set a unique identifier for this component
-void CCharacterControllerHelperComponent::ReflectType(Schematyc::CTypeDesc<CCharacterControllerHelperComponent>& desc)
-{
-	desc.SetGUID("{6C1F2B4A-FBF7-46A5-A976-AA81871103F1}"_cry_guid);
-
-	desc.SetEditorCategory("Utilities");
-	desc.SetLabel("Character Controller Helper");
-	desc.SetDescription("Component to help with character controllers");
 }
 
 CCharacterControllerHelperComponent::CCharacterControllerHelperComponent()

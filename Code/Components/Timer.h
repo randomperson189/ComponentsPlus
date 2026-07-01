@@ -7,32 +7,38 @@
 ////////////////////////////////////////////////////////
 // Physicalized bullet shot from weaponry, expires on collision with another object
 ////////////////////////////////////////////////////////
-class CRagdollHelperComponent final : public IEntityComponent
+class CTimerComponent final : public IEntityComponent
 {
 public:
-	CRagdollHelperComponent();
-	virtual ~CRagdollHelperComponent();
+	CTimerComponent();
+	virtual ~CTimerComponent();
 
 	// IEntityComponent
 	virtual void Initialize() override;
 
 	virtual Cry::Entity::EventFlags GetEventMask() const override;
 	virtual void ProcessEvent(const SEntityEvent& event) override;
-
-	// Reflect type to set a unique identifier for this component
-	static void ReflectType(Schematyc::CTypeDesc<CRagdollHelperComponent>& desc)
-	{
-		desc.SetGUID("{14EFA301-9CE6-4A69-ACBF-F52D9A90F94B}"_cry_guid);
-
-		desc.SetEditorCategory("Utilities");
-		desc.SetLabel("Ragdoll Helper");
-		desc.SetDescription("Component to help with ragdolls");
-		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
-	}
 	// ~IEntityComponent
 
-	void Ragdollize();
-	void UnRagdollize();
+	// Reflect type to set a unique identifier for this component
+	static void ReflectType(Schematyc::CTypeDesc<CTimerComponent>& desc)
+	{
+		desc.SetGUID("{40BF8126-B991-45C3-ADDF-AEE92EBB8DB0}"_cry_guid);
 
-	bool IsRagdoll();
+		desc.SetEditorCategory("Utilities");
+		desc.SetLabel("Timer");
+		desc.SetDescription("Component to do timers");
+		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
+	}
+
+	void SetTimerSchematyc(uint32 timerId, int timeInMilliseconds);
+	void KillTimerSchematyc(uint32 timerId);
+
+	struct SOnTimer
+	{
+		SOnTimer() = default;
+		SOnTimer(int timerId) : timerId(timerId) {}
+
+		int timerId;
+	};
 };

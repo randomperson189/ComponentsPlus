@@ -16,7 +16,16 @@ public:
 	// IEntityComponent
 	virtual void Initialize() override;
 
-	static void ReflectType(Schematyc::CTypeDesc<CCameraHelperComponent>& desc);
+	// Reflect type to set a unique identifier for this component
+	static void ReflectType(Schematyc::CTypeDesc<CCameraHelperComponent>& desc)
+	{
+		desc.SetGUID("{B22D0B63-458F-4F04-89C1-8F3990270B45}"_cry_guid);
+
+		desc.SetEditorCategory("Utilities");
+		desc.SetLabel("Camera Helper");
+		desc.SetDescription("Component to help with camera component");
+		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
+	}
 	// ~IEntityComponent
 
 	void SetFOV(CryTransform::CAngle fov);

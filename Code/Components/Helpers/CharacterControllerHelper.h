@@ -15,7 +15,16 @@ public:
 
 	// IEntityComponent
 
-	static void ReflectType(Schematyc::CTypeDesc<CCharacterControllerHelperComponent>& desc);
+	// Reflect type to set a unique identifier for this component
+	static void ReflectType(Schematyc::CTypeDesc<CCharacterControllerHelperComponent>& desc)
+	{
+		desc.SetGUID("{6C1F2B4A-FBF7-46A5-A976-AA81871103F1}"_cry_guid);
+
+		desc.SetEditorCategory("Utilities");
+		desc.SetLabel("Character Controller Helper");
+		desc.SetDescription("Component to help with character controllers");
+		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
+	}
 	// ~IEntityComponent
 
 	float GetDimensions(/*float& radius, */float& height, float& zOffset, bool& bCapsule, float& groundContactEps);

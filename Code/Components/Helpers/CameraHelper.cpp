@@ -4,6 +4,8 @@
 #include <CrySchematyc/Env/Elements/EnvComponent.h>
 #include <CrySchematyc/Env/Elements/EnvFunction.h>
 #include <CrySchematyc/Env/Elements/EnvSignal.h>
+#include <CrySchematyc/Env/IEnvRegistrar.h>
+
 #include <DefaultComponents/Cameras/CameraComponent.h>
 
 namespace
@@ -23,16 +25,6 @@ namespace
 	}
 
 	CRY_STATIC_AUTO_REGISTER_FUNCTION(&RegisterCameraHelperComponent);
-}
-
-// Reflect type to set a unique identifier for this component
-void CCameraHelperComponent::ReflectType(Schematyc::CTypeDesc<CCameraHelperComponent>& desc)
-{
-	desc.SetGUID("{B22D0B63-458F-4F04-89C1-8F3990270B45}"_cry_guid);
-
-	desc.SetEditorCategory("Utilities");
-	desc.SetLabel("Camera Helper");
-	desc.SetDescription("Component to help with camera component");
 }
 
 CCameraHelperComponent::CCameraHelperComponent() 

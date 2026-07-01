@@ -4,7 +4,7 @@
 #include <CrySchematyc/Env/Elements/EnvComponent.h>
 #include <CrySchematyc/Env/Elements/EnvFunction.h>
 #include <CrySchematyc/Env/Elements/EnvSignal.h>
-#include <DefaultComponents/Input/InputComponent.h>
+#include <CrySchematyc/Env/IEnvRegistrar.h>
 
 namespace
 {
@@ -25,16 +25,6 @@ namespace
 	}
 
 	CRY_STATIC_AUTO_REGISTER_FUNCTION(&RegisterCVarHelperComponent);
-}
-
-// Reflect type to set a unique identifier for this component
-void CCVarHelperComponent::ReflectType(Schematyc::CTypeDesc<CCVarHelperComponent>& desc)
-{
-	desc.SetGUID("{0E3427D3-5684-4939-A50B-7236ABCBFE59}"_cry_guid);
-
-	desc.SetEditorCategory("Utilities");
-	desc.SetLabel("CVar Helper");
-	desc.SetDescription("Component to access CVars");
 }
 
 CCVarHelperComponent::CCVarHelperComponent() 

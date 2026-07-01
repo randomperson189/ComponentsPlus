@@ -7,26 +7,23 @@
 ////////////////////////////////////////////////////////
 // Physicalized bullet shot from weaponry, expires on collision with another object
 ////////////////////////////////////////////////////////
-class CCVarHelperComponent final : public IEntityComponent
+class CAdvancedAnimationHelperComponent final : public IEntityComponent
 {
 public:
-	CCVarHelperComponent();
-	virtual ~CCVarHelperComponent();
+	CAdvancedAnimationHelperComponent();
+	virtual ~CAdvancedAnimationHelperComponent();
 
 	// IEntityComponent
 	virtual void Initialize() override;
 
 	// Reflect type to set a unique identifier for this component
-	static void ReflectType(Schematyc::CTypeDesc<CCVarHelperComponent>& desc)
+	static void ReflectType(Schematyc::CTypeDesc<CAdvancedAnimationHelperComponent>& desc)
 	{
-		desc.SetGUID("{0E3427D3-5684-4939-A50B-7236ABCBFE59}"_cry_guid);
+		desc.SetGUID("{1DF944B1-3802-41D6-B56E-D90AB368511E}"_cry_guid);
 
 		desc.SetEditorCategory("Utilities");
-		desc.SetLabel("CVar Helper");
-		desc.SetDescription("Component to access CVars");
-		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
+		desc.SetLabel("Advanced Animation Helper");
+		desc.SetDescription("Component to help with advanced animation");
 	}
 	// ~IEntityComponent
-
-	void ExecuteConsoleCommand(Schematyc::CSharedString command, bool bSilentMode = false, bool bDeferExecution = false);
 };

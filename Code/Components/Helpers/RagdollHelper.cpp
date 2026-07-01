@@ -4,6 +4,7 @@
 #include <CrySchematyc/Env/Elements/EnvComponent.h>
 #include <CrySchematyc/Env/Elements/EnvFunction.h>
 #include <CrySchematyc/Env/Elements/EnvSignal.h>
+#include <CrySchematyc/Env/IEnvRegistrar.h>
 
 #include <DefaultComponents/Geometry/AdvancedAnimationComponent.h>
 #include <DefaultComponents/Physics/CharacterControllerComponent.h>
@@ -34,16 +35,6 @@ namespace
 	}
 
 	CRY_STATIC_AUTO_REGISTER_FUNCTION(&RegisterRagdollHelperComponent);
-}
-
-// Reflect type to set a unique identifier for this component
-void CRagdollHelperComponent::ReflectType(Schematyc::CTypeDesc<CRagdollHelperComponent>& desc)
-{
-	desc.SetGUID("{14EFA301-9CE6-4A69-ACBF-F52D9A90F94B}"_cry_guid);
-
-	desc.SetEditorCategory("Utilities");
-	desc.SetLabel("Ragdoll Helper");
-	desc.SetDescription("Component to help with ragdolls");
 }
 
 CRagdollHelperComponent::CRagdollHelperComponent()

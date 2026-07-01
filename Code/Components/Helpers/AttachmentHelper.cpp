@@ -4,6 +4,7 @@
 #include <CrySchematyc/Env/Elements/EnvComponent.h>
 #include <CrySchematyc/Env/Elements/EnvFunction.h>
 #include <CrySchematyc/Env/Elements/EnvSignal.h>
+#include <CrySchematyc/Env/IEnvRegistrar.h>
 
 #include <DefaultComponents/Geometry/AdvancedAnimationComponent.h>
 
@@ -40,16 +41,6 @@ namespace
 	}
 
 	CRY_STATIC_AUTO_REGISTER_FUNCTION(&RegisterAttachmentHelperComponent);
-}
-
-// Reflect type to set a unique identifier for this component
-void CAttachmentHelperComponent::ReflectType(Schematyc::CTypeDesc<CAttachmentHelperComponent>& desc)
-{
-	desc.SetGUID("{5F753867-3CC6-47C2-80E6-769EE6ECA27E}"_cry_guid);
-
-	desc.SetEditorCategory("Utilities");
-	desc.SetLabel("Attachment Helper");
-	desc.SetDescription("Component to manage attachments");
 }
 
 CAttachmentHelperComponent::CAttachmentHelperComponent()
