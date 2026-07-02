@@ -21,6 +21,7 @@ namespace
 			{
 				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CTimerComponent::SetTimerSchematyc, "{61994F63-291F-492D-90DB-E95257C10D0A}"_cry_guid, "Set Timer");
 				pFunction->BindInput(1, 'tid', "Timer Id", "Timer Id");
+				pFunction->BindInput(2, 'tms', "Time In Milliseconds", "Time In Milliseconds");
 				componentScope.Register(pFunction);
 			}
 			{
