@@ -28,6 +28,8 @@ namespace
 				pFunction->BindInput(1, 'tid', "Timer Id", "Timer Id");
 				componentScope.Register(pFunction);
 			}
+
+			componentScope.Register(SCHEMATYC_MAKE_ENV_SIGNAL(CTimerComponent::SOnTimer));
 		}
 	}
 
