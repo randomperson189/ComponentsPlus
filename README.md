@@ -1,6 +1,6 @@
 <img width="463" height="139" alt="ComponentsPlus_logo" src="https://github.com/user-attachments/assets/cc9e68ee-f795-4780-8762-2626969f22b2" />
 <br>
-Components+ is a plugin for CryEngine 5.7 that exposes more functions to it's ECS &amp; Schematyc system
+Components+ is a plugin for CryEngine 5.7 that adds more functionality to it's ECS &amp; Schematyc system
 
 ## How to install the plugin to your project:
 
