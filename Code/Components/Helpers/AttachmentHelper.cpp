@@ -17,7 +17,7 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CAttachmentHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::CreateAttachment, "{A6A098D7-151B-46C9-A83D-D5D20580FA6A}"_cry_guid, "Attach Entity");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::CreateEntityAttachment, "{A6A098D7-151B-46C9-A83D-D5D20580FA6A}"_cry_guid, "Attach Entity");
 				pFunction->BindInput(1, 'tgte', "Target", "Target Entity to find");
 				pFunction->BindInput(2, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
 				pFunction->BindInput(3, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
@@ -25,16 +25,34 @@ namespace
 				componentScope.Register(pFunction);
 			}
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::RemoveAttachment, "{90B7B539-FA9C-4824-8361-2DF9EA299BA6}"_cry_guid, "Detach Entity");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::RemoveAttachment, "{90B7B539-FA9C-4824-8361-2DF9EA299BA6}"_cry_guid, "Remove Attachment");
 				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
 				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
 				componentScope.Register(pFunction);
 			}
 			{
 				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::GetAttachmentTransform, "{9894E80A-39EF-4BF3-9843-D99FA7AD2E3E}"_cry_guid, "Get Attachment Transform");
+				pFunction->SetFlags({ Schematyc::EEnvFunctionFlags::Construction });
 				pFunction->BindOutput(0, 'tr', "Transform", "Attachment Transform");
 				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
 				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
+				componentScope.Register(pFunction);
+			}
+
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::SetAttachmentHidden, "{14AB044F-5FBF-41BA-A1EF-6679EA795521}"_cry_guid, "Set Attachment Hidden");
+				pFunction->SetFlags({ Schematyc::EEnvFunctionFlags::Construction });
+				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
+				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
+				pFunction->BindInput(3, 'hide', "Hide", "Whether to hide the attachment or not");
+				componentScope.Register(pFunction);
+			}
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::SetAttachmentHiddenShadow, "{C0634495-5C8B-482A-8CEA-7ED4367F803B}"_cry_guid, "Set Attachment Hidden Shadow");
+				pFunction->SetFlags({ Schematyc::EEnvFunctionFlags::Construction });
+				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
+				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
+				pFunction->BindInput(3, 'hide', "Hide", "Whether to hide the attachment in shadow or not");
 				componentScope.Register(pFunction);
 			}
 		}
@@ -55,14 +73,10 @@ void CAttachmentHelperComponent::Initialize()
 {
 }
 
-void CAttachmentHelperComponent::CreateAttachment(Schematyc::ExplicitEntityId id, int animComponentIndex, Schematyc::CSharedString attachmentName, Vec3 scale)
+void CAttachmentHelperComponent::CreateEntityAttachment(Schematyc::ExplicitEntityId id, int animComponentIndex, Schematyc::CSharedString attachmentName, Vec3 scale)
 {
 	if (gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(id)) == nullptr)
 		return;
-
-	// Define the animation component's interface ID (from ReflectType)
-	// TODO: Find a better way to get the GUID directly, just in case it changes
-	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
 
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
@@ -74,11 +88,14 @@ void CAttachmentHelperComponent::CreateAttachment(Schematyc::ExplicitEntityId id
 		{
 			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
 			{
-				CEntityAttachment* pEntityAttachment = new CEntityAttachment();
-				pEntityAttachment->SetEntityId(static_cast<EntityId>(id));
-				pEntityAttachment->SetScale(scale);
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					CEntityAttachment* pEntityAttachment = new CEntityAttachment();
+					pEntityAttachment->SetEntityId(static_cast<EntityId>(id));
+					pEntityAttachment->SetScale(scale);
 
-				pAttachmentMgr->GetInterfaceByName(attachmentName.c_str())->AddBinding(pEntityAttachment);
+					pAttachment->AddBinding(pEntityAttachment);
+				}
 			}
 		}
 	}
@@ -86,10 +103,6 @@ void CAttachmentHelperComponent::CreateAttachment(Schematyc::ExplicitEntityId id
 
 void CAttachmentHelperComponent::RemoveAttachment(int animComponentIndex, Schematyc::CSharedString attachmentName)
 {
-	// Define the animation component's interface ID (from ReflectType)
-	// TODO: Find a better way to get the GUID directly, just in case it changes
-	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
-
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
 	m_pEntity->GetComponentsByTypeId(animComponentID, components);
@@ -100,7 +113,52 @@ void CAttachmentHelperComponent::RemoveAttachment(int animComponentIndex, Schema
 		{
 			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
 			{
-				pAttachmentMgr->GetInterfaceByName(attachmentName.c_str())->ClearBinding();
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					pAttachment->ClearBinding();
+				}
+			}
+		}
+	}
+}
+
+void CAttachmentHelperComponent::SetAttachmentHidden(int animComponentIndex, Schematyc::CSharedString attachmentName, bool hide)
+{
+	// Array to store all components of this type
+	DynArray<IEntityComponent*> components;
+	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+
+	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
+	{
+		if (ICharacterInstance* pCharInstance = animationComponent->GetCharacter())
+		{
+			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
+			{
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					pAttachment->HideAttachment(hide ? 1 : 0);
+				}
+			}
+		}
+	}
+}
+
+void CAttachmentHelperComponent::SetAttachmentHiddenShadow(int animComponentIndex, Schematyc::CSharedString attachmentName, bool hide)
+{
+	// Array to store all components of this type
+	DynArray<IEntityComponent*> components;
+	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+
+	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
+	{
+		if (ICharacterInstance* pCharInstance = animationComponent->GetCharacter())
+		{
+			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
+			{
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					pAttachment->HideInShadow(hide ? 1 : 0);
+				}
 			}
 		}
 	}
@@ -108,10 +166,6 @@ void CAttachmentHelperComponent::RemoveAttachment(int animComponentIndex, Schema
 
 CryTransform::CTransform CAttachmentHelperComponent::GetAttachmentTransform(int animComponentIndex, Schematyc::CSharedString attachmentName)
 {
-	// Define the animation component's interface ID (from ReflectType)
-	// TODO: Find a better way to get the GUID directly, just in case it changes
-	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
-
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
 	m_pEntity->GetComponentsByTypeId(animComponentID, components);
@@ -122,9 +176,9 @@ CryTransform::CTransform CAttachmentHelperComponent::GetAttachmentTransform(int 
 		{
 			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
 			{
-				if (pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
 				{
-					QuatTS worldQuatTS = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str())->GetAttWorldAbsolute();
+					QuatTS worldQuatTS = pAttachment->GetAttWorldAbsolute();
 
 					return CryTransform::CTransform(worldQuatTS.t, CryTransform::CRotation(worldQuatTS.q), Vec3(worldQuatTS.s));
 				}
@@ -134,3 +188,4 @@ CryTransform::CTransform CAttachmentHelperComponent::GetAttachmentTransform(int 
 
 	return CryTransform::CTransform();
 }
+

@@ -2,6 +2,8 @@
 #include "StdAfx.h"
 #include "Plugin.h"
 
+#include "BehaviorTree/ExecuteSchematycNode.h"
+
 #include <CrySchematyc/Env/IEnvRegistry.h>
 #include <CrySchematyc/Env/EnvPackage.h>
 #include <CrySchematyc/Utils/SharedString.h>
@@ -30,6 +32,12 @@ void CPlugin::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam
 {
 	switch (event)
 	{
+		// Called when the game framework has initialized and we are ready for game logic to start
+	case ESYSTEM_EVENT_GAME_POST_INIT:
+	{
+		BehaviorTree::RegisterBehaviorTreeNodes_Custom();
+	}
+	break;
 	case ESYSTEM_EVENT_REGISTER_SCHEMATYC_ENV:
 	{
 		// Register all components that belong to this plug-in

@@ -28,8 +28,16 @@ public:
 	}
 	// ~IEntityComponent
 
-	void CreateAttachment(Schematyc::ExplicitEntityId id, int animComponentIndex, Schematyc::CSharedString attachmentName, Vec3 scale = Vec3(1.f, 1.f, 1.f));
+	void CreateEntityAttachment(Schematyc::ExplicitEntityId id, int animComponentIndex, Schematyc::CSharedString attachmentName, Vec3 scale = Vec3(1.f, 1.f, 1.f));
 	void RemoveAttachment(int animComponentIndex, Schematyc::CSharedString attachmentName);
 
+	void SetAttachmentHidden(int animComponentIndex, Schematyc::CSharedString attachmentName, bool hide);
+	void SetAttachmentHiddenShadow(int animComponentIndex, Schematyc::CSharedString attachmentName, bool hide);
+
 	CryTransform::CTransform GetAttachmentTransform(int animComponentIndex, Schematyc::CSharedString attachmentName);
+
+protected:
+	// Define the animation component's interface ID (from ReflectType)
+	// TODO: Find a better way to get the GUID directly, just in case it changes
+	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
 };
