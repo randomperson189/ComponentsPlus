@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{5F753867-3CC6-47C2-80E6-769EE6ECA27E}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Attachment Helper");
 		desc.SetDescription("Component to manage attachments");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

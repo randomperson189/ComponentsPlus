@@ -21,10 +21,14 @@ public:
 	{
 		desc.SetGUID("{8D0D1DD0-56F5-48AA-B0E5-CBC19A1C3FCF}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Physics Helper");
 		desc.SetDescription("Component to help with physics");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
 	}
 	// ~IEntityComponent
+
+	void SetResting(bool resting);
+
+	void SetPhysicsEnabled(bool enabled);
 };

@@ -24,7 +24,7 @@ public:
 	{
 		desc.SetGUID("{B65F8780-FD47-49D7-AD6F-02DF006F322A}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Network Helper");
 		desc.SetDescription("Component to help with networking");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

@@ -20,7 +20,7 @@ public:
 	{
 		desc.SetGUID("{6C1F2B4A-FBF7-46A5-A976-AA81871103F1}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Character Controller Helper");
 		desc.SetDescription("Component to help with character controllers");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

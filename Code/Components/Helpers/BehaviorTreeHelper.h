@@ -46,7 +46,7 @@ public:
 	{
 		desc.SetGUID("{990EBD04-CC78-4810-B867-76E3E1A8554E}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Behavior Tree Helper");
 		desc.SetDescription("Component to help with Behavior Trees");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

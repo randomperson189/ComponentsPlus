@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{A832CEDC-944A-440C-8EB1-3C4CCD7ECB46}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Material Helper");
 		desc.SetDescription("Component to access Materials");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{0E3427D3-5684-4939-A50B-7236ABCBFE59}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("CVar Helper");
 		desc.SetDescription("Component to access CVars");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

@@ -24,7 +24,7 @@ public:
 	{
 		desc.SetGUID("{14EFA301-9CE6-4A69-ACBF-F52D9A90F94B}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Ragdoll Helper");
 		desc.SetDescription("Component to help with ragdolls");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

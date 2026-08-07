@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{280C1EE0-078A-4821-B437-FE6C358665B9}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Transform Helper");
 		desc.SetDescription("Component to access Transforms");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });

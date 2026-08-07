@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{1DF944B1-3802-41D6-B56E-D90AB368511E}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Advanced Animation Helper");
 		desc.SetDescription("Component to help with advanced animation");
 	}

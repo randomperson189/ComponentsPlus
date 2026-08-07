@@ -21,7 +21,7 @@ public:
 	{
 		desc.SetGUID("{B22D0B63-458F-4F04-89C1-8F3990270B45}"_cry_guid);
 
-		desc.SetEditorCategory("Utilities");
+		desc.SetEditorCategory("Helpers");
 		desc.SetLabel("Camera Helper");
 		desc.SetDescription("Component to help with camera component");
 		desc.SetComponentFlags({ IEntityComponent::EFlags::Singleton });
