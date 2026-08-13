@@ -15,13 +15,13 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CPhysicsHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CPhysicsHelperComponent::SetResting, "{645592F2-FE87-4CF6-8EF9-68D24C33FBC4}"_cry_guid, "Set Resting");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CPhysicsHelperComponent::SetResting, "{645592F2-FE87-4CF6-8EF9-68D24C33FBC4}"_cry_guid, "SetResting");
 				pFunction->BindInput(1, 'rst', "Resting");
 				componentScope.Register(pFunction);
 			}
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CPhysicsHelperComponent::SetPhysicsEnabled, "{BDB30214-EC7C-45FF-B300-EC49BEB465D2}"_cry_guid, "Set Physics Enabled");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CPhysicsHelperComponent::SetPhysicsEnabled, "{BDB30214-EC7C-45FF-B300-EC49BEB465D2}"_cry_guid, "SetPhysicsEnabled");
 				pFunction->BindInput(1, 'rst', "Enabled");
 				componentScope.Register(pFunction);
 			}

@@ -15,7 +15,7 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CBehaviorTreeHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CBehaviorTreeHelperComponent::SetStatus, "{A12A8B9E-8ED7-473F-9651-9856802829D4}"_cry_guid, "Set Status");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CBehaviorTreeHelperComponent::SetStatus, "{A12A8B9E-8ED7-473F-9651-9856802829D4}"_cry_guid, "SetStatus");
 				pFunction->BindInput(1, 'stat', "Status", "Status of the current behavior tree node");
 				componentScope.Register(pFunction);
 			}

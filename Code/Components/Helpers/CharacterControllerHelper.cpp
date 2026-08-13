@@ -18,7 +18,7 @@ namespace
 
 			{
 				{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetDimensions, "{7A4F08BD-466A-438A-987B-FAF2E1347ACC}"_cry_guid, "Get Dimensions");
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetDimensions, "{7A4F08BD-466A-438A-987B-FAF2E1347ACC}"_cry_guid, "GetDimensions");
 					pFunction->BindOutput(0, 'radi', "Collider Radius", "Radius of the capsule or cylinder");
 					pFunction->BindOutput(1, 'heig', "Collider Height", "Height of the capsule or cylinder");
 					pFunction->BindOutput(2, 'zoff', "Z Offset", "Offset of the capsule or cylinder on the Z axis");
@@ -27,7 +27,7 @@ namespace
 					componentScope.Register(pFunction);
 				}
 				{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::SetDimensions, "{5E934515-4256-4431-9853-39E9001CA398}"_cry_guid, "Set Dimensions");
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::SetDimensions, "{5E934515-4256-4431-9853-39E9001CA398}"_cry_guid, "SetDimensions");
 					pFunction->BindInput(1, 'radi', "Collider Radius", "Radius of the capsule or cylinder", 0.45f);
 					pFunction->BindInput(2, 'heig', "Collider Height", "Height of the capsule or cylinder", 0.935f);
 					pFunction->BindInput(3, 'zoff', "Z Offset", "Offset of the capsule or cylinder on the Z axis", 1.0f);
@@ -37,12 +37,12 @@ namespace
 				}
 
 				/*{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetTransform, "{7F1171B3-5ABB-46E3-91D0-01F033A85977}"_cry_guid, "Get Controller Transform");
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetTransform, "{7F1171B3-5ABB-46E3-91D0-01F033A85977}"_cry_guid, "GetControllerTransform");
 					pFunction->BindOutput(0, 'tsfm', "Transform", "Transform");
 					componentScope.Register(pFunction);
 				}
 				{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::SetTransform, "{1A406F28-447B-436D-8688-A9D2B17581FC}"_cry_guid, "Set Controller Transform");
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::SetTransform, "{1A406F28-447B-436D-8688-A9D2B17581FC}"_cry_guid, "SetControllerTransform");
 					pFunction->BindInput(1, 'tsfm', "Transform", "Transform");
 					componentScope.Register(pFunction);
 				}*/

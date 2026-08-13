@@ -15,7 +15,7 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CCVarHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCVarHelperComponent::ExecuteConsoleCommand, "{678B3840-BA0E-492F-B001-19B83F82C1C6}"_cry_guid, "Execute Console Command");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCVarHelperComponent::ExecuteConsoleCommand, "{678B3840-BA0E-492F-B001-19B83F82C1C6}"_cry_guid, "ExecuteConsoleCommand");
 				pFunction->BindInput(1, 'cmd', "Command");
 				pFunction->BindInput(2, 'slt', "Silent Mode");
 				pFunction->BindInput(3, 'dfr', "Defer Execution");

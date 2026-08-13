@@ -17,7 +17,7 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CCameraHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCameraHelperComponent::SetFOV, "{DBF8136B-A116-40AF-9737-7F2E9616B203}"_cry_guid, "Set FOV");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCameraHelperComponent::SetFOV, "{DBF8136B-A116-40AF-9737-7F2E9616B203}"_cry_guid, "SetFOV");
 				pFunction->BindInput(1, 'fov', "FOV", "Field Of View", CryTransform::CAngle::FromDegrees(70));
 				componentScope.Register(pFunction);
 			}

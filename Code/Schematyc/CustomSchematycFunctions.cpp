@@ -10,6 +10,7 @@
 #include <CrySchematyc/CoreAPI.h>
 #include <CrySchematyc/Env/IEnvRegistrar.h>
 #include <CrySchematyc/Utils/Transform.h>
+#include <CrySchematyc/Utils/AnyArray.h>
 #include <CryPhysics/physinterface.h>
 #include <CryCore/StaticInstanceList.h>
 
@@ -21,6 +22,28 @@ void ReflectType(Schematyc::CTypeDesc<ray_hit>& desc)
 
 namespace Schematyc
 {
+	namespace Int32
+	{
+		Schematyc::ExplicitEntityId ToEntity(int integer)
+		{
+			return (Schematyc::ExplicitEntityId(integer));
+		}
+
+		static void RegisterFunctions(IEnvRegistrar& registrar)
+		{
+			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<int32>().GetGUID());
+			{
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ToEntity, "{4E0E90B2-C3B9-439C-8CA7-9414CA223859}"_cry_guid, "ToEntity");
+					pFunction->SetDescription("Converts an integer to an entity id");
+					pFunction->BindOutput(0, 'ent', "Entity");
+					pFunction->BindInput(1, 'int', "Value");
+					scope.Register(pFunction);
+				}
+			}
+		}
+	}
+
 	namespace Raycast
 	{
 		bool RayCastAdvanced(const Vec3& origin, const Vec3& direction, Vec3& hitPt, Vec3& hitNormal, const ExplicitEntityId& ignoredEntity, ExplicitEntityId& hitEntityId)
@@ -57,7 +80,7 @@ namespace Schematyc
 		{
 			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<ray_hit>().GetGUID());
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&RayCastAdvanced, "{11C536CD-C889-43CB-BC26-47CA5D41809D}"_cry_guid, "RayCast Advanced");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&RayCastAdvanced, "{11C536CD-C889-43CB-BC26-47CA5D41809D}"_cry_guid, "RayCastAdvanced");
 				pFunction->BindInput(1, 'orig', "Origin", "The source position to cast from");
 				pFunction->BindInput(2, 'dir', "Direction", "The direction and magnitude to cast to");
 				pFunction->BindInput(5, 'iid', "Ignored Entity Id", "The id of the entity that we ignore");
@@ -97,15 +120,29 @@ namespace Schematyc
 			return gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId)) != nullptr;
 		}
 
+		int ToInt32(Schematyc::ExplicitEntityId entity)
+		{
+			return ((int)entity);
+		}
+
 		static void RegisterFunctions(IEnvRegistrar& registrar)
 		{
 			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<ExplicitEntityId>().GetGUID());
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&IsValid, "{04BE5FFF-7268-4226-B2D3-7BEAE042C614}"_cry_guid, "IsValid");
-				pFunction->SetDescription("Check if this Entity is valid");
-				pFunction->BindOutput(0, 'vald', "IsValid");
-				pFunction->BindInput(1, 'ent', "Entity");
-				scope.Register(pFunction);
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&IsValid, "{04BE5FFF-7268-4226-B2D3-7BEAE042C614}"_cry_guid, "IsValid");
+					pFunction->SetDescription("Check if this Entity is valid");
+					pFunction->BindOutput(0, 'vald', "IsValid");
+					pFunction->BindInput(1, 'ent', "Entity");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ToInt32, "{7E07B1E6-E19D-44E2-BDDE-D03396D635C0}"_cry_guid, "ToInt32");
+					pFunction->SetDescription("Converts an entity id to an integer");
+					pFunction->BindOutput(0, 'int', "Int32");
+					pFunction->BindInput(1, 'ent', "Value");
+					scope.Register(pFunction);
+				}
 			}
 		}
 	}
@@ -132,6 +169,7 @@ namespace Schematyc
 
 	void RegisterCustomFunctions(IEnvRegistrar& registrar)
 	{
+		Int32::RegisterFunctions(registrar);
 		Raycast::RegisterFunctions(registrar);
 		Log::RegisterFunctions(registrar);
 		Entity::RegisterFunctions(registrar);

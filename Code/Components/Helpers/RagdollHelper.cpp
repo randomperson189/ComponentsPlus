@@ -27,7 +27,7 @@ namespace
 			}
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CRagdollHelperComponent::IsRagdoll, "{1482856F-445C-4EE6-A724-1BF8E19CD731}"_cry_guid, "Is Ragdoll");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CRagdollHelperComponent::IsRagdoll, "{1482856F-445C-4EE6-A724-1BF8E19CD731}"_cry_guid, "IsRagdoll");
 				pFunction->BindOutput(0, 'rgdl', "Is Ragdoll");
 				componentScope.Register(pFunction);
 			}
