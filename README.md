@@ -29,6 +29,6 @@ Components+ is a plugin for CryEngine 5.7 that adds more functionality to it's E
 ```
 
 ## Credits
-RandomPerson189 - Creating the plugin and most the code
+[RandomPerson189](https://github.com/randomperson189) - Creating the plugin and most the code
 
-PixelAZ - Designing the plugin logo
+[PixelAZ](https://github.com/77pixelAZ) - Designing the plugin logo
