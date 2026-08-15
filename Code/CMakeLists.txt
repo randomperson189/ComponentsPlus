@@ -25,8 +25,9 @@ add_sources("Code_uber.cpp"
 add_sources("BehaviorTree_uber.cpp"
     PROJECTS ComponentsPlus
     SOURCE_GROUP "BehaviorTree"
+		"BehaviorTree/BehaviorTreeNodes_Custom.cpp"
 		"BehaviorTree/ExecuteSchematycNode.cpp"
-		"BehaviorTree/ExecuteSchematycNode.h"
+		"BehaviorTree/BehaviorTreeNodes_Custom.h"
 )
 add_sources("Components_uber.cpp"
     PROJECTS ComponentsPlus

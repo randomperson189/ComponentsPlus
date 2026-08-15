@@ -1,3 +1,5 @@
+#pragma once
+
 #include "StdAfx.h"
 
 // Include BehaviorTreeDefines first!
@@ -12,9 +14,7 @@
 #include <CrySerialization/ClassFactory.h>
 #include <CrySerialization/Enum.h>
 
-
-
-// ExecuteSchematycNode.h
+// BehaviorTreeNodes_Custom.h
 
 // Although we're creating an Action node, the syntax would be the same for a Decorator or a Composite node as well.
 class ExecuteSchematycNode : public BehaviorTree::Action

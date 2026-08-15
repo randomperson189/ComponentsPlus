@@ -45,11 +45,11 @@ void CMaterialHelperComponent::SetCharacterMaterialParamFloat(int animComponentI
 {
 	// Define the animation component's interface ID (from ReflectType)
 	// TODO: Find a better way to get the GUID directly, just in case it changes
-	const CryInterfaceID animComponentID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
+	const CryInterfaceID animComponentGUID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
 
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{

@@ -2,7 +2,7 @@
 #include "StdAfx.h"
 #include "Plugin.h"
 
-#include "BehaviorTree/ExecuteSchematycNode.h"
+#include "BehaviorTree/BehaviorTreeNodes_Custom.h"
 
 #include <CrySchematyc/Env/IEnvRegistry.h>
 #include <CrySchematyc/Env/EnvPackage.h>

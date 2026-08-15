@@ -25,7 +25,14 @@ namespace
 				componentScope.Register(pFunction);
 			}
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::RemoveAttachment, "{90B7B539-FA9C-4824-8361-2DF9EA299BA6}"_cry_guid, "RemoveAttachment");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::CreateSkinAttachment, "{2D6867DA-7913-4489-8E9E-D16599224D8C}"_cry_guid, "AttachSkin");
+				pFunction->BindInput(1, 'skin', "Skin File", "Skin File to use");
+				pFunction->BindInput(2, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
+				pFunction->BindInput(3, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
+				componentScope.Register(pFunction);
+			}
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAttachmentHelperComponent::RemoveAttachment, "{90B7B539-FA9C-4824-8361-2DF9EA299BA6}"_cry_guid, "RemoveAttachmentBinding");
 				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
 				pFunction->BindInput(2, 'atcn', "Attachment Name", "Name of the attachment to find in the Animation Component");
 				componentScope.Register(pFunction);
@@ -80,7 +87,7 @@ void CAttachmentHelperComponent::CreateEntityAttachment(Schematyc::ExplicitEntit
 
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{
@@ -101,11 +108,37 @@ void CAttachmentHelperComponent::CreateEntityAttachment(Schematyc::ExplicitEntit
 	}
 }
 
+void CAttachmentHelperComponent::CreateSkinAttachment(Schematyc::SkinName skinFile, int animComponentIndex, Schematyc::CSharedString attachmentName)
+{
+	// Array to store all components of this type
+	DynArray<IEntityComponent*> components;
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
+
+	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
+	{
+		if (ICharacterInstance* pCharInstance = animationComponent->GetCharacter())
+		{
+			if (IAttachmentManager* pAttachmentMgr = pCharInstance->GetIAttachmentManager())
+			{
+				if (IAttachment* pAttachment = pAttachmentMgr->GetInterfaceByName(attachmentName.c_str()))
+				{
+					if (ISkin* pSkin = gEnv->pCharacterManager->LoadModelSKIN(skinFile.value, 0))
+					{
+						CSKINAttachment* pSkinAttachment = new CSKINAttachment();
+
+						pAttachment->AddBinding(pSkinAttachment, pSkin);
+					}
+				}
+			}
+		}
+	}
+}
+
 void CAttachmentHelperComponent::RemoveAttachment(int animComponentIndex, Schematyc::CSharedString attachmentName)
 {
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{
@@ -126,7 +159,7 @@ void CAttachmentHelperComponent::SetAttachmentHidden(int animComponentIndex, Sch
 {
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{
@@ -147,7 +180,7 @@ void CAttachmentHelperComponent::SetAttachmentHiddenShadow(int animComponentInde
 {
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{
@@ -168,7 +201,7 @@ CryTransform::CTransform CAttachmentHelperComponent::GetAttachmentTransform(int 
 {
 	// Array to store all components of this type
 	DynArray<IEntityComponent*> components;
-	m_pEntity->GetComponentsByTypeId(animComponentID, components);
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
 
 	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
 	{

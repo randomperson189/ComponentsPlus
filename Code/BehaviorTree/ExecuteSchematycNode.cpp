@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 
 // Must include the header where your class is defined
-#include "ExecuteSchematycNode.h"
+#include "BehaviorTreeNodes_Custom.h"
 
 #include "Components/Helpers/BehaviorTreeHelper.h"
 
@@ -140,16 +140,5 @@ void ExecuteSchematycNode::HandleEvent(const EventContext& context, const Event&
 	else if (event.GetName() == "SchematycInvalid")
 	{
 		data.status = BehaviorTree::Status::Invalid;
-	}
-}
-
-namespace BehaviorTree
-{
-	void RegisterBehaviorTreeNodes_Custom()
-	{
-		IBehaviorTreeManager& manager = *gEnv->pAISystem->GetIBehaviorTreeManager();
-
-		const char* COLOR_GAME = "ff00ff";
-		REGISTER_BEHAVIOR_TREE_NODE_WITH_SERIALIZATION(manager, ExecuteSchematycNode, "Custom\\Execute Schematyc Signal", COLOR_GAME);
 	}
 }
