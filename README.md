@@ -32,3 +32,5 @@ Components+ is a plugin for CryEngine 5.7 that adds more functionality to it's E
 [RandomPerson189](https://github.com/randomperson189) - Creating the plugin and most the code
 
 [PixelAZ](https://github.com/77pixelAZ) - Designing the plugin logo
+
+[Crytek](https://github.com/CRYTEK) - Creating CryEngine and the CollisionMask Component (from their GalaxSys sample project)
