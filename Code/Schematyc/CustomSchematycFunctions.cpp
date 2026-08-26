@@ -13,6 +13,7 @@
 #include <CrySchematyc/Utils/AnyArray.h>
 #include <CryPhysics/physinterface.h>
 #include <CryCore/StaticInstanceList.h>
+#include <CryAction/IMaterialEffects.h>
 
 void ReflectType(Schematyc::CTypeDesc<ray_hit>& desc)
 {
@@ -125,6 +126,25 @@ namespace Schematyc
 			return ((int)entity);
 		}
 
+		void ExecuteMaterialEffectFlowGraph(Schematyc::CSharedString libName, Schematyc::CSharedString effectName, Schematyc::ExplicitEntityId entity, Vec3 position, float intensity, float blendOutTime)
+		{
+			TMFXEffectId fx = gEnv->pMaterialEffects->GetEffectIdByName(libName.c_str(), effectName.c_str());
+
+			SMFXRunTimeEffectParams fxParams;
+			fxParams.trg = (EntityId)entity;
+			fxParams.pos = position;
+
+			gEnv->pMaterialEffects->ExecuteEffect(fx, fxParams);
+
+			SMFXCustomParamValue intensityValue;
+			intensityValue.fValue = intensity;
+			SMFXCustomParamValue blendOutTimeValue;
+			blendOutTimeValue.fValue = blendOutTime;
+
+			gEnv->pMaterialEffects->SetCustomParameter(fx, "Intensity", intensityValue);
+			gEnv->pMaterialEffects->SetCustomParameter(fx, "BlendOutTime", blendOutTimeValue);
+		}
+
 		static void RegisterFunctions(IEnvRegistrar& registrar)
 		{
 			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<ExplicitEntityId>().GetGUID());
@@ -141,6 +161,17 @@ namespace Schematyc
 					pFunction->SetDescription("Converts an entity id to an integer");
 					pFunction->BindOutput(0, 'int', "Int32");
 					pFunction->BindInput(1, 'ent', "Value");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ExecuteMaterialEffectFlowGraph, "{F8839B1F-1980-4C84-A26E-3A175AE99657}"_cry_guid, "ExecuteMaterialEffectFlowGraph");
+					pFunction->SetDescription("Executes a material effect");
+					pFunction->BindInput(1, 'lib', "Lib Name");
+					pFunction->BindInput(2, 'fx', "Effect Name");
+					pFunction->BindInput(3, 'ent', "Entity");
+					pFunction->BindInput(4, 'pos', "Position");
+					pFunction->BindInput(5, 'int', "Intensity");
+					pFunction->BindInput(6, 'bot', "Blend Out Time");
 					scope.Register(pFunction);
 				}
 			}
