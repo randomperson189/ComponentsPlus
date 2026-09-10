@@ -1,7 +1,5 @@
 #pragma once
 
-#include <DefaultComponents/Physics/CharacterControllerComponent.h>
-
 #include <CryCore/StaticInstanceList.h>
 #include <CryEntitySystem/IEntitySystem.h>
 #include <CrySchematyc/Utils/SharedString.h>
@@ -29,13 +27,9 @@ public:
 	}
 	// ~IEntityComponent
 
-	void SetMovementParams(const Cry::DefaultComponents::CCharacterControllerComponent::SMovement movement);
-	void ExpandMovementParams(const Cry::DefaultComponents::CCharacterControllerComponent::SMovement& movement, float& airControl, float& airResistance, float& inertia, float& inertiaAcceleration, float& maxClimbAngle, float& maxJumpAngle, float& minSlideAngle, float& minFallAngle, float& maxGroundVelocity);
-	Cry::DefaultComponents::CCharacterControllerComponent::SMovement CreateMovementParams(float airControl, float airResistance, float inertia, float inertiaAcceleration, float maxClimbAngle, float maxJumpAngle, float minSlideAngle, float minFallAngle, float maxGroundVelocity);
+	float GetDimensions(/*float& radius, */float& height, float& zOffset, bool& bCapsule, float& groundContactEps);
+	void SetDimensions(/*float mass, */float radius, float height, float zOffset, bool bCapsule, float groundContactEps);
 
-	void SetPhysicsParams(const Cry::DefaultComponents::CCharacterControllerComponent::SPhysics physics, float zOffset);
-	void ExpandPhysicsParams(const Cry::DefaultComponents::CCharacterControllerComponent::SPhysics& physics, float& radius, float& height, bool& capsule, float& groundContactEps, bool& sendCollisionSignal);
-	Cry::DefaultComponents::CCharacterControllerComponent::SPhysics CreatePhysicsParams(float radius, float height, bool capsule, float groundContactEps, bool sendCollisionSignal);
-
-	float GetZOffset();
+	/*CryTransform::CTransform GetTransform();
+	void SetTransform(CryTransform::CTransform transform);*/
 };
