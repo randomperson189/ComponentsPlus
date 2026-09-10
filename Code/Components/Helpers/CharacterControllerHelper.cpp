@@ -19,11 +19,11 @@ namespace
 			{
 				{
 					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetDimensions, "{7A4F08BD-466A-438A-987B-FAF2E1347ACC}"_cry_guid, "GetDimensions");
-					pFunction->BindOutput(0, 'radi', "Collider Radius", "Radius of the capsule or cylinder");
-					pFunction->BindOutput(1, 'heig', "Collider Height", "Height of the capsule or cylinder");
-					pFunction->BindOutput(2, 'zoff', "Z Offset", "Offset of the capsule or cylinder on the Z axis");
-					pFunction->BindOutput(3, 'caps', "Use Capsule", "Whether or not to use a capsule as the main collider, otherwise cylinder");
-					pFunction->BindOutput(4, 'gce', "Ground Contact Epsilon", "The amount that the player needs to move upwards before ground contact is lost");
+					pFunction->BindOutput(1, 'radi', "Collider Radius", "Radius of the capsule or cylinder");
+					pFunction->BindOutput(2, 'heig', "Collider Height", "Height of the capsule or cylinder");
+					pFunction->BindOutput(3, 'zoff', "Z Offset", "Offset of the capsule or cylinder on the Z axis");
+					pFunction->BindOutput(4, 'caps', "Use Capsule", "Whether or not to use a capsule as the main collider, otherwise cylinder");
+					pFunction->BindOutput(5, 'gce', "Ground Contact Epsilon", "The amount that the player needs to move upwards before ground contact is lost");
 					componentScope.Register(pFunction);
 				}
 				{
@@ -61,7 +61,7 @@ CCharacterControllerHelperComponent::~CCharacterControllerHelperComponent()
 {
 }
 
-float CCharacterControllerHelperComponent::GetDimensions(/*float& radius, */float& height, float& zOffset, bool& bCapsule, float& groundContactEps)
+void CCharacterControllerHelperComponent::GetDimensions(float& radius, float& height, float& zOffset, bool& bCapsule, float& groundContactEps)
 {
 	if (auto* pCharacterController = m_pEntity->GetComponent<Cry::DefaultComponents::CCharacterControllerComponent>())
 	{
@@ -73,7 +73,7 @@ float CCharacterControllerHelperComponent::GetDimensions(/*float& radius, */floa
 		pPhysEnt->GetParams(&playerDimensions);
 
 		bCapsule = playerDimensions.bUseCapsule;
-		//radius = playerDimensions.sizeCollider.x;
+		radius = playerDimensions.sizeCollider.x / 0.5f;
 		height = playerDimensions.sizeCollider.z / 0.5f;
 		zOffset = pCharacterController->GetTransformMatrix().GetTranslation().z;
 		groundContactEps = playerDimensions.groundContactEps;
@@ -82,12 +82,7 @@ float CCharacterControllerHelperComponent::GetDimensions(/*float& radius, */floa
 		{
 			height /= 0.5f;
 		}
-
-		// Radius is the return value here
-		return playerDimensions.sizeCollider.x / 0.5f;
 	}
-
-	return 0;
 }
 
 void CCharacterControllerHelperComponent::SetDimensions(/*float mass, */float radius, float height, float zOffset, bool bCapsule, float groundContactEps)

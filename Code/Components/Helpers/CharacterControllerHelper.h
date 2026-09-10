@@ -27,7 +27,7 @@ public:
 	}
 	// ~IEntityComponent
 
-	float GetDimensions(/*float& radius, */float& height, float& zOffset, bool& bCapsule, float& groundContactEps);
+	void GetDimensions(float& radius, float& height, float& zOffset, bool& bCapsule, float& groundContactEps);
 	void SetDimensions(/*float mass, */float radius, float height, float zOffset, bool bCapsule, float groundContactEps);
 
 	/*CryTransform::CTransform GetTransform();
