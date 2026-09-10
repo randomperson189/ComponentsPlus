@@ -77,11 +77,16 @@ namespace
 					componentScope.Register(pFunction);
 				}
 
-				{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetZOffset, "{EBD34C47-305F-4F06-AB77-45F8ADC0414F}"_cry_guid, "GetZOffset");
-					pFunction->BindOutput(0, 'zoff', "Z Offset", "Offset of the capsule or cylinder on the Z axis");
+				/*{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::GetTransform, "{7F1171B3-5ABB-46E3-91D0-01F033A85977}"_cry_guid, "GetControllerTransform");
+					pFunction->BindOutput(0, 'tsfm', "Transform", "Transform");
 					componentScope.Register(pFunction);
 				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CCharacterControllerHelperComponent::SetTransform, "{1A406F28-447B-436D-8688-A9D2B17581FC}"_cry_guid, "SetControllerTransform");
+					pFunction->BindInput(1, 'tsfm', "Transform", "Transform");
+					componentScope.Register(pFunction);
+				}*/
 			}
 		}
 	}
