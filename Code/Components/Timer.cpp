@@ -44,7 +44,7 @@ static void ReflectType(Schematyc::CTypeDesc<CTimerComponent::SOnTimer>& desc)
 	desc.AddMember(&CTimerComponent::SOnTimer::timerId, 'tid', "TimerId", "Timer Id", "Timer Id", "0");
 }
 
-CTimerComponent::CTimerComponent() 
+CTimerComponent::CTimerComponent()
 {
 }
 
@@ -59,7 +59,8 @@ void CTimerComponent::Initialize()
 Cry::Entity::EventFlags CTimerComponent::GetEventMask() const
 {
 	return
-		Cry::Entity::EEvent::TimerExpired;
+		Cry::Entity::EEvent::TimerExpired |
+		Cry::Entity::EEvent::Reset;
 }
 
 void CTimerComponent::ProcessEvent(const SEntityEvent& event)
@@ -71,6 +72,18 @@ void CTimerComponent::ProcessEvent(const SEntityEvent& event)
 		if (Schematyc::IObject* const pSchematycObject = m_pEntity->GetSchematycObject())
 		{
 			m_pEntity->GetSchematycObject()->ProcessSignal(SOnTimer((int)event.nParam[0]), GetGUID());
+		}
+	}
+	break;
+	case Cry::Entity::EEvent::Reset:
+	{
+		if (event.nParam[0] != 0)
+		{
+
+		}
+		else
+		{
+			KillAllTimers();
 		}
 	}
 	break;
