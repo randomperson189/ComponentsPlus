@@ -47,17 +47,17 @@ public:
 	struct SServerReceiveRemoteEvent
 	{
 		SServerReceiveRemoteEvent() = default;
-		SServerReceiveRemoteEvent(Schematyc::CSharedString eventName) : eventName(Schematyc::CSharedString(eventName)) {}
+		SServerReceiveRemoteEvent(Schematyc::CSharedString pEventName) : pEventName(Schematyc::CSharedString(pEventName)) {}
 
-		Schematyc::CSharedString eventName;
+		Schematyc::CSharedString pEventName;
 	};
 
 	struct SClientReceiveRemoteEvent
 	{
 		SClientReceiveRemoteEvent() = default;
-		SClientReceiveRemoteEvent(Schematyc::CSharedString eventName) : eventName(Schematyc::CSharedString(eventName)) {}
+		SClientReceiveRemoteEvent(Schematyc::CSharedString pEventName) : pEventName(Schematyc::CSharedString(pEventName)) {}
 
-		Schematyc::CSharedString eventName;
+		Schematyc::CSharedString pEventName;
 	};
 
 	// NetSerialize Variables
@@ -93,11 +93,11 @@ protected:
 	// RMI Functions
 	struct RemoteParams
 	{
-		string eventName;
+		string pEventName;
 
 		void SerializeWith(TSerialize ser)
 		{
-			ser.Value("eventName", eventName, 'stab');
+			ser.Value("pEventName", pEventName, 'stab');
 		}
 	};
 

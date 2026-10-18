@@ -4,6 +4,16 @@
 #include <CryEntitySystem/IEntitySystem.h>
 #include <CrySchematyc/Utils/SharedString.h>
 
+#include <DefaultComponents/Geometry/AdvancedAnimationComponent.h>
+
+struct SAdvancedAnimationAction
+{
+	int animComponentId;
+	int scope;
+	IActionPtr action;
+	int priority = 0;
+};
+
 ////////////////////////////////////////////////////////
 // Physicalized bullet shot from weaponry, expires on collision with another object
 ////////////////////////////////////////////////////////
@@ -16,6 +26,9 @@ public:
 	// IEntityComponent
 	virtual void Initialize() override;
 
+	virtual Cry::Entity::EventFlags GetEventMask() const override;
+	virtual void ProcessEvent(const SEntityEvent& event) override;
+
 	// Reflect type to set a unique identifier for this component
 	static void ReflectType(Schematyc::CTypeDesc<CAdvancedAnimationHelperComponent>& desc)
 	{
@@ -26,4 +39,22 @@ public:
 		desc.SetDescription("Component to help with advanced animation");
 	}
 	// ~IEntityComponent
+
+	void QueueFragmentAdvanced(int animComponentId, Schematyc::CSharedString fragment, int scopeId, float speedMultiplier, bool noAutoBlendOut, bool overridePreviousFragment);
+
+	Schematyc::CSharedString GetCharacterFilePath(int animComponentIndex);
+
+	struct SAnimationEvent
+	{
+		SAnimationEvent() = default;
+
+		SAnimationEvent(Schematyc::CSharedString eventname, Schematyc::CSharedString charactername) : pEventName(eventname), pCharacterName(charactername) {}
+
+		Schematyc::CSharedString pEventName;
+		Schematyc::CSharedString pCharacterName;
+	};
+
+protected:
+
+	std::vector<SAdvancedAnimationAction> m_actions;
 };

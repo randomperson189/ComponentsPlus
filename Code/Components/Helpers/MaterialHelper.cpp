@@ -77,3 +77,8 @@ void CMaterialHelperComponent::SetCharacterMaterialParamFloat(int animComponentI
 		}
 	}
 }
+
+void CMaterialHelperComponent::SetMaterial(int componentIndex, Schematyc::CSharedString attachmentName, Schematyc::MaterialFileName material)
+{
+
+}

@@ -29,4 +29,6 @@ public:
 	// ~IEntityComponent
 
 	void SetCharacterMaterialParamFloat(int animComponentIndex, Schematyc::CSharedString attachmentName, int materialIndex, Schematyc::CSharedString paramName, float value);
+
+	void SetMaterial(int componentIndex, Schematyc::CSharedString attachmentName, Schematyc::MaterialFileName material);
 };
