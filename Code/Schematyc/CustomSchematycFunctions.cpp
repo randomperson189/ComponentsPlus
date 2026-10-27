@@ -23,28 +23,6 @@ void ReflectType(Schematyc::CTypeDesc<ray_hit>& desc)
 
 namespace Schematyc
 {
-	namespace Int32
-	{
-		Schematyc::ExplicitEntityId ToEntity(int integer)
-		{
-			return (Schematyc::ExplicitEntityId(integer));
-		}
-
-		static void RegisterFunctions(IEnvRegistrar& registrar)
-		{
-			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<int32>().GetGUID());
-			{
-				{
-					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ToEntity, "{4E0E90B2-C3B9-439C-8CA7-9414CA223859}"_cry_guid, "ToEntity");
-					pFunction->SetDescription("Converts an integer to an entity id");
-					pFunction->BindOutput(0, 'ent', "Entity");
-					pFunction->BindInput(1, 'int', "Value");
-					scope.Register(pFunction);
-				}
-			}
-		}
-	}
-
 	namespace Raycast
 	{
 		bool RayCastAdvanced(const Vec3& origin, const Vec3& direction, Vec3& hitPt, Vec3& hitNormal, const ExplicitEntityId& ignoredEntity, ExplicitEntityId& hitEntityId)
@@ -250,6 +228,145 @@ namespace Schematyc
 		}
 	}
 
+	namespace Vector2
+	{
+		Vec2 Lerp(Vec2 a, Vec2 b, float t)
+		{
+			return Vec2::CreateLerp(a, b, t);
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<Vec2>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{F79967B3-9A4E-43C0-A737-259FAC78528F}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a vector3");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Vector3
+	{
+		Vec3 Lerp(Vec3 a, Vec3 b, float t)
+		{
+			return Vec3::CreateLerp(a, b, t);
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<Vec3>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{C145B960-A5A3-4B01-BB0A-F6874A7D1917}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a vector3");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Int32
+	{
+		Schematyc::ExplicitEntityId ToEntity(int integer)
+		{
+			return (Schematyc::ExplicitEntityId(integer));
+		}
+
+		static void RegisterFunctions(IEnvRegistrar& registrar)
+		{
+			CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<int32>().GetGUID());
+			{
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ToEntity, "{4E0E90B2-C3B9-439C-8CA7-9414CA223859}"_cry_guid, "ToEntity");
+					pFunction->SetDescription("Converts an integer to an entity id");
+					pFunction->BindOutput(0, 'ent', "Entity");
+					pFunction->BindInput(1, 'int', "Value");
+					scope.Register(pFunction);
+				}
+			}
+		}
+	}
+
+	namespace Float
+	{
+		float Lerp(float a, float b, float t)
+		{
+			return a + (b - a) * t;
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<float>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{F63BEE1B-54BA-4F33-9C7D-6102E634780B}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a float");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Angle
+	{
+		CryTransform::CAngle Lerp(CryTransform::CAngle a, CryTransform::CAngle b, float t)
+		{
+			return a + (b - a) * t;
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngle>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{2B5C3563-94E3-48F5-BC46-FC131820A064}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp an angle");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Angles3
+	{
+		CryTransform::CAngles3 Lerp(CryTransform::CAngles3 a, CryTransform::CAngles3 b, float t)
+		{
+			Quat qa(a.ToAng3());
+			Quat qb(b.ToAng3());
+
+			Quat result = Quat::CreateSlerp(qa, qb, t);
+
+			Ang3 angles(result);
+
+			return CryTransform::CAngles3(CryTransform::CAngle::FromRadians(angles.x), CryTransform::CAngle::FromRadians(angles.y), CryTransform::CAngle::FromRadians(angles.z));
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngles3>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{6DC5B8CA-2B77-45D4-A545-4B446DFD20FA}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a 3D angle");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
 	namespace Rotation
 	{
 		CRotation CreateFromVector(Vec3 vector)
@@ -289,84 +406,13 @@ namespace Schematyc
 		}
 	}
 
-	namespace Angles3
-	{
-		CryTransform::CAngles3 Lerp(CryTransform::CAngles3 a, CryTransform::CAngles3 b, float t)
-		{
-			Quat qa(a.ToAng3());
-			Quat qb(b.ToAng3());
-
-			Quat result = Quat::CreateSlerp(qa, qb, t);
-
-			Ang3 angles(result);
-
-			return CryTransform::CAngles3(CryTransform::CAngle::FromRadians(angles.x), CryTransform::CAngle::FromRadians(angles.y), CryTransform::CAngle::FromRadians(angles.z));
-		}
-
-		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
-		{
-			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngles3>().GetGUID());
-			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{6DC5B8CA-2B77-45D4-A545-4B446DFD20FA}"_cry_guid, "Lerp");
-				pFunction->SetDescription("Lerp a 3D angle");
-				pFunction->BindOutput(0, 'res', "Result");
-				pFunction->BindInput(1, 'a', "A");
-				pFunction->BindInput(2, 'b', "B");
-				pFunction->BindInput(3, 't', "T");
-				scope.Register(pFunction);
-			}
-		}
-	}
-
-	namespace Angle
-	{
-		CryTransform::CAngle Lerp(CryTransform::CAngle a, CryTransform::CAngle b, float t)
-		{
-			return a + (b - a) * t;
-		}
-
-		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
-		{
-			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngle>().GetGUID());
-			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{2B5C3563-94E3-48F5-BC46-FC131820A064}"_cry_guid, "Lerp");
-				pFunction->SetDescription("Lerp an angle");
-				pFunction->BindOutput(0, 'res', "Result");
-				pFunction->BindInput(1, 'a', "A");
-				pFunction->BindInput(2, 'b', "B");
-				pFunction->BindInput(3, 't', "T");
-				scope.Register(pFunction);
-			}
-		}
-	}
-
-	namespace Float
-	{
-		float Lerp(float a, float b, float t)
-		{
-			return a + (b - a) * t;
-		}
-
-		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
-		{
-			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<float>().GetGUID());
-			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{F63BEE1B-54BA-4F33-9C7D-6102E634780B}"_cry_guid, "Lerp");
-				pFunction->SetDescription("Lerp a float");
-				pFunction->BindOutput(0, 'res', "Result");
-				pFunction->BindInput(1, 'a', "A");
-				pFunction->BindInput(2, 'b', "B");
-				pFunction->BindInput(3, 't', "T");
-				scope.Register(pFunction);
-			}
-		}
-	}
-
 	void RegisterCustomFunctions(IEnvRegistrar& registrar)
 	{
 		Raycast::RegisterFunctions(registrar);
 		Log::RegisterFunctions(registrar);
 		Entity::RegisterFunctions(registrar);
+		Vector2::RegisterFunctions(registrar);
+		Vector3::RegisterFunctions(registrar);
 		Int32::RegisterFunctions(registrar);
 		Float::RegisterFunctions(registrar);
 		Angle::RegisterFunctions(registrar);
