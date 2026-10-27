@@ -15,9 +15,16 @@ namespace
 			Schematyc::CEnvRegistrationScope componentScope = scope.Register(SCHEMATYC_MAKE_ENV_COMPONENT(CAdvancedAnimationHelperComponent));
 
 			{
-				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAdvancedAnimationHelperComponent::GetCharacterFilePath, "{B62E9F15-C6A2-4625-A363-4555555568B2}"_cry_guid, "GetCharacterFilePath");
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAdvancedAnimationHelperComponent::GetCharacterFile, "{B62E9F15-C6A2-4625-A363-4555555568B2}"_cry_guid, "GetCharacterFile");
 				pFunction->BindOutput(0, 'char', "Character Name");
 				pFunction->BindInput(1, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
+				componentScope.Register(pFunction);
+			}
+
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&CAdvancedAnimationHelperComponent::SetCharacterFile, "{079FC652-8252-4241-A7CC-6C381B04896E}"_cry_guid, "SetCharacterFile");
+				pFunction->BindInput(1, 'char', "Character Name");
+				pFunction->BindInput(2, 'aci', "Anim Component Index", "Index of the Animation Component to use", 0);
 				componentScope.Register(pFunction);
 			}
 
@@ -78,7 +85,7 @@ void CAdvancedAnimationHelperComponent::QueueFragmentAdvanced(int animComponentI
 	
 }
 
-Schematyc::CSharedString CAdvancedAnimationHelperComponent::GetCharacterFilePath(int animComponentIndex)
+Schematyc::CSharedString CAdvancedAnimationHelperComponent::GetCharacterFile(int animComponentIndex)
 {
 	// Define the animation component's interface ID (from ReflectType)
 	// TODO: Find a better way to get the GUID directly, just in case it changes
@@ -100,4 +107,23 @@ Schematyc::CSharedString CAdvancedAnimationHelperComponent::GetCharacterFilePath
 	}
 
 	return Schematyc::CSharedString();
+}
+
+void CAdvancedAnimationHelperComponent::SetCharacterFile(Schematyc::CharacterFileName characterFile, int animComponentIndex)
+{
+	// Define the animation component's interface ID (from ReflectType)
+	// TODO: Find a better way to get the GUID directly, just in case it changes
+	const CryInterfaceID animComponentGUID = "{3CD5DDC5-EE15-437F-A997-79C2391537FE}"_cry_guid;
+
+	// Array to store all components of this type
+	DynArray<IEntityComponent*> components;
+	m_pEntity->GetComponentsByTypeId(animComponentGUID, components);
+
+	if (animComponentIndex < 0 || animComponentIndex >= components.size())
+		return;
+
+	if (Cry::DefaultComponents::CAdvancedAnimationComponent* animationComponent = static_cast<Cry::DefaultComponents::CAdvancedAnimationComponent*>(components[animComponentIndex]))
+	{
+		animationComponent->SetCharacterFile(characterFile.value);
+	}
 }

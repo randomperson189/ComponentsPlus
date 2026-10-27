@@ -257,6 +257,16 @@ namespace Schematyc
 			return CRotation(Quat::CreateRotationVDir(vector));
 		}
 
+		CryTransform::CRotation Lerp(CryTransform::CRotation a, CryTransform::CRotation b, float t)
+		{
+			Quat qa = a.ToQuat();
+			Quat qb = b.ToQuat();
+
+			Quat result = Quat::CreateSlerp(qa, qb, t);
+
+			return CryTransform::CRotation(result);
+		}
+
 		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
 		{
 			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CRotation>().GetGUID());
@@ -267,15 +277,100 @@ namespace Schematyc
 				pFunction->BindOutput(0, 'res', "Result");
 				scope.Register(pFunction);
 			}
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{C5134320-F963-4E39-AE52-F0B849EF3F6D}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a rotation");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Angles3
+	{
+		CryTransform::CAngles3 Lerp(CryTransform::CAngles3 a, CryTransform::CAngles3 b, float t)
+		{
+			Quat qa(a.ToAng3());
+			Quat qb(b.ToAng3());
+
+			Quat result = Quat::CreateSlerp(qa, qb, t);
+
+			Ang3 angles(result);
+
+			return CryTransform::CAngles3(CryTransform::CAngle::FromRadians(angles.x), CryTransform::CAngle::FromRadians(angles.y), CryTransform::CAngle::FromRadians(angles.z));
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngles3>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{6DC5B8CA-2B77-45D4-A545-4B446DFD20FA}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a 3D angle");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Angle
+	{
+		CryTransform::CAngle Lerp(CryTransform::CAngle a, CryTransform::CAngle b, float t)
+		{
+			return a + (b - a) * t;
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<CryTransform::CAngle>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{2B5C3563-94E3-48F5-BC46-FC131820A064}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp an angle");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
+		}
+	}
+
+	namespace Float
+	{
+		float Lerp(float a, float b, float t)
+		{
+			return a + (b - a) * t;
+		}
+
+		static void RegisterFunctions(Schematyc::IEnvRegistrar& registrar)
+		{
+			Schematyc::CEnvRegistrationScope scope = registrar.Scope(GetTypeDesc<float>().GetGUID());
+			{
+				auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&Lerp, "{F63BEE1B-54BA-4F33-9C7D-6102E634780B}"_cry_guid, "Lerp");
+				pFunction->SetDescription("Lerp a float");
+				pFunction->BindOutput(0, 'res', "Result");
+				pFunction->BindInput(1, 'a', "A");
+				pFunction->BindInput(2, 'b', "B");
+				pFunction->BindInput(3, 't', "T");
+				scope.Register(pFunction);
+			}
 		}
 	}
 
 	void RegisterCustomFunctions(IEnvRegistrar& registrar)
 	{
-		Int32::RegisterFunctions(registrar);
 		Raycast::RegisterFunctions(registrar);
 		Log::RegisterFunctions(registrar);
 		Entity::RegisterFunctions(registrar);
+		Int32::RegisterFunctions(registrar);
+		Float::RegisterFunctions(registrar);
+		Angle::RegisterFunctions(registrar);
+		Angles3::RegisterFunctions(registrar);
 		Rotation::RegisterFunctions(registrar);
 	}
 }

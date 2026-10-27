@@ -42,7 +42,9 @@ public:
 
 	void QueueFragmentAdvanced(int animComponentId, Schematyc::CSharedString fragment, int scopeId, float speedMultiplier, bool noAutoBlendOut, bool overridePreviousFragment);
 
-	Schematyc::CSharedString GetCharacterFilePath(int animComponentIndex);
+	Schematyc::CSharedString GetCharacterFile(int animComponentIndex);
+
+	void SetCharacterFile(Schematyc::CharacterFileName characterFile, int animComponentIndex);
 
 	struct SAnimationEvent
 	{
