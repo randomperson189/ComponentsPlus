@@ -168,7 +168,12 @@ namespace Schematyc
 	{
 		bool IsValid(ExplicitEntityId entityId)
 		{
-			return gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId)) != nullptr;
+			if (gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId)))
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		int ToInt32(Schematyc::ExplicitEntityId entity)
@@ -178,7 +183,15 @@ namespace Schematyc
 
 		EntityClassName GetClass(ExplicitEntityId entityId)
 		{
-			return gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId))->GetClass()->GetName();
+			if (IEntity* pEntity = gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId)))
+			{
+				if (IEntityClass* pClass = pEntity->GetClass())
+				{
+					return pClass->GetName();
+				}
+			}
+
+			return {};
 		}
 
 		bool ClassEqual(EntityClassName a, EntityClassName b)
