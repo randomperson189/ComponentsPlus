@@ -176,6 +176,26 @@ namespace Schematyc
 			return ((int)entity);
 		}
 
+		EntityClassName GetClass(ExplicitEntityId entityId)
+		{
+			return gEnv->pEntitySystem->GetEntity(static_cast<EntityId>(entityId))->GetClass()->GetName();
+		}
+
+		bool ClassEqual(EntityClassName a, EntityClassName b)
+		{
+			return a == b;
+		}
+
+		bool ClassNotEqual(EntityClassName a, EntityClassName b)
+		{
+			return a != b;
+		}
+
+		CSharedString ClassToString(EntityClassName inputClass)
+		{
+			return inputClass.value;
+		}
+
 		void ExecuteMaterialEffectFlowGraph(Schematyc::CSharedString libName, Schematyc::CSharedString effectName, Schematyc::ExplicitEntityId entity, Vec3 position, float intensity, float blendOutTime)
 		{
 			TMFXEffectId fx = gEnv->pMaterialEffects->GetEffectIdByName(libName.c_str(), effectName.c_str());
@@ -222,6 +242,36 @@ namespace Schematyc
 					pFunction->BindInput(4, 'pos', "Position");
 					pFunction->BindInput(5, 'int', "Intensity");
 					pFunction->BindInput(6, 'bot', "Blend Out Time");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&GetClass, "{858E9061-1A83-47EF-82B2-9F1217CDB7F1}"_cry_guid, "GetClass");
+					pFunction->SetDescription("Get the Entity's Class");
+					pFunction->BindOutput(0, 'clas', "Class");
+					pFunction->BindInput(1, 'ent', "Entity");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ClassEqual, "{0E6651AC-AFDB-4149-93CC-69F1700EA825}"_cry_guid, "ClassEqual");
+					pFunction->SetDescription("Class Equal");
+					pFunction->BindOutput(0, 'res', "Result");
+					pFunction->BindInput(1, 'a', "A");
+					pFunction->BindInput(2, 'b', "B");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ClassNotEqual, "{3A74AA4C-2FA7-4A51-A981-DC31D19ABBC3}"_cry_guid, "ClassNotEqual");
+					pFunction->SetDescription("Class Not Equal");
+					pFunction->BindOutput(0, 'res', "Result");
+					pFunction->BindInput(1, 'a', "A");
+					pFunction->BindInput(2, 'b', "B");
+					scope.Register(pFunction);
+				}
+				{
+					auto pFunction = SCHEMATYC_MAKE_ENV_FUNCTION(&ClassToString, "{69D1D03A-1944-4F18-A2A8-B6EC034FF98E}"_cry_guid, "ClassToString");
+					pFunction->SetDescription("Class to String");
+					pFunction->BindOutput(0, 'strg', "String");
+					pFunction->BindInput(1, 'clas', "Class");
 					scope.Register(pFunction);
 				}
 			}
